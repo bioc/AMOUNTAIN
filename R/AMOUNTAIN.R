@@ -184,19 +184,19 @@ moduleIdentificationGPFixSS <- function(W,z,x0,a=0.5,lambda=1,maxiter=1000){
     grad = -W%*%x-lambda*z
     f_x = -0.5*t(x)%*%W%*%x-lambda*(t(z)%*%x)
     func = numeric(maxiter)
-
+    
     for (iteration in 1:maxiter){
-            #y = x-1*grad
-            #print(sum(y)+0.5*gamma*sum(y*y))
-            func[iteration] = f_x
-            #x_cand = EuclideanProjectionEN(x-1*grad,t=1,alpha = a)
-            #x_cand = EuclideanProjection(x-1*grad,t=radius)
-            x_cand = EuclideanProjectionENNORM (x-1*grad,t=1,alpha = a)
-            if(sum(abs(x_cand-x)^2)^(1/2) < epsilon){break}
-            x=x_cand
-            grad = -W%*%x-lambda*z
-            f_x = -0.5*t(x)%*%W%*%x-lambda*(t(z)%*%x)
-            
+        #y = x-1*grad
+        #print(sum(y)+0.5*gamma*sum(y*y))
+        func[iteration] = f_x
+        #x_cand = EuclideanProjectionEN(x-1*grad,t=1,alpha = a)
+        #x_cand = EuclideanProjection(x-1*grad,t=radius)
+        x_cand = EuclideanProjectionENNORM (x-1*grad,t=1,alpha = a)
+        if(sum(abs(x_cand-x)^2)^(1/2) < epsilon){break}
+        x=x_cand
+        grad = -W%*%x-lambda*z
+        f_x = -0.5*t(x)%*%W%*%x-lambda*(t(z)%*%x)
+        
     }
     return (list(func[1:(iteration-1)],x))
 }
@@ -311,7 +311,7 @@ EuclideanProjectionENNORM <- function(y,t,alpha = 0.5){
 #' @export
 #' 
 moduleIdentificationGPFixSSTwolayer <- function(W1,z1,x0,W2,z2,y0,A,lambda1=1,
-                                    lambda2=1,lambda3=1,maxiter=1000,a1=0.5,a2=0.5){
+                                                lambda2=1,lambda3=1,maxiter=1000,a1=0.5,a2=0.5){
     x = x0
     y = y0
     epsilon = 1e-6
@@ -320,20 +320,20 @@ moduleIdentificationGPFixSSTwolayer <- function(W1,z1,x0,W2,z2,y0,A,lambda1=1,
     f_x = -0.5*t(x)%*%W1%*%x-lambda1*(t(z1)%*%x)-0.5*t(y)%*%W2%*%y-
         lambda2*(t(z2)%*%y)-lambda3*t(x)%*%A%*%y
     func = numeric(maxiter)
-
+    
     for (iteration in 1:maxiter){
         #y = x-1*grad
         #print(sum(y)+0.5*gamma*sum(y*y))
         func[iteration] = f_x
         x_cand = EuclideanProjectionENNORM(x-1*grad_x,t=1,alpha = a1)
         #grad_x = -W1%*%x_cand-lambda1*z1-A%*%y
-
+        
         y_cand = EuclideanProjectionENNORM(y-1*grad_y,t=1,alpha = a2)
         #grad_y = -W2%*%y_cand-lambda2*z2-t(A)%*%grad_x
         #x_cand = EuclideanProjection(x-1*grad,t=radius)
         #x_cand = EuclideanProjectionENNORM (x-1*grad,t=1,alpha = a)
         if(sum(abs(x_cand-x)^2)^(1/2) < epsilon &&
-               sum(abs(y_cand-y)^2)^(1/2) < epsilon){break}
+           sum(abs(y_cand-y)^2)^(1/2) < epsilon){break}
         x = x_cand
         y = y_cand
         grad_x = -W1%*%x-lambda1*z1-lambda3*A%*%y
@@ -383,7 +383,7 @@ moduleIdentificationGPFixSSTwolayer <- function(W1,z1,x0,W2,z2,y0,A,lambda1=1,
 #' @export
 
 moduleIdentificationGPFixSSMultilayer <- function(W, listz, x0, a=0.5, 
-                                                lambda = 1, maxiter=1000){
+                                                  lambda = 1, maxiter=1000){
     numlayer = length(listz)
     x = x0
     epsilon = 1e-6

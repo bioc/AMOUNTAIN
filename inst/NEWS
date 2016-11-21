@@ -1,9 +1,15 @@
+CHANGES IN VERSION 1.1.1
+------------------------
+NEW FEATURES
+
+    o C implementations
+
 CHANGES IN VERSION 1.0.1
 ------------------------
+
 USER-LEVEL CHANGES
 
     o R markdown vignette
-    o New multilayer network interface
 
 CHANGES IN VERSION 0.99.3
 ------------------------
